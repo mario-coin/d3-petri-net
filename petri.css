@@ -1,5 +1,4 @@
 html, body {
-    /* background: #446699; */
     border:none;
     margin: 0;
 }
@@ -17,7 +16,7 @@ table, input {
 }
 
 svg {
-    width: 80%;
+    width: 60%;
     height: 100%;
     background: #fff;
 }
