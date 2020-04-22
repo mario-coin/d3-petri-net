@@ -1,0 +1,23 @@
+html, body {
+    /* background: #446699; */
+    border:none;
+    margin: 0;
+}
+
+table, input {
+    width: 100%;
+}
+
+#table-container {
+    width: 20%;
+    height: 100%;
+    background: #ccc;
+    float: left;
+    overflow-y: scroll;
+}
+
+svg {
+    width: 80%;
+    height: 100%;
+    background: #fff;
+}

@@ -1,0 +1,208 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="petri.css">
+
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    </head>
+    <body>
+<div class="row">
+  <div id="table-container">
+    <h4>Lugar</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Marcas</th>
+            </tr>
+        </thead>
+        <tbody class="dynamic" id="pda-places">
+            <tr>
+                <td>
+                    <input class="dyn-input name" type="text" id="name[1]" name="name[1]" value=">" />
+                </td>
+                <td>
+                    <input class="dyn-input count" type="text" id="count[1]" name="count[1]" value="4" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input name" type="text" id="name[2]" name="name[2]" value="b" />
+                </td>
+                <td>
+                    <input class="dyn-input count" type="text" id="count[2]" name="count[2]" value="0" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input name" type="text" id="name[3]" name="name[3]" value="c" />
+                </td>
+                <td>
+                    <input class="dyn-input count" type="text" id="count[3]" name="count[3]" value="0" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input name" type="text" id="name[4]" name="name[4]" value="i" />
+                </td>
+                <td>
+                    <input class="dyn-input count" type="text" id="count[4]" name="count[4]" value="0" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input name" type="text" id="name[5]" name="name[5]" value="j" />
+                </td>
+                <td>
+                    <input class="dyn-input count" type="text" id="count[5]" name="count[5]" value="0" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input name" type="text" id="name[6]" name="name[6]" value="^" />
+                </td>
+                <td>
+                    <input class="dyn-input count" type="text" id="count[6]" name="count[6]" value="0" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="button tiny secondary add-row" data-table="pda-places">Novo Lugar</button>
+    <br><br>
+
+    <h4>Transição</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+            </tr>
+        </thead>
+        <tbody class="dynamic" id="pda-transition">
+            <tr>
+                <td>
+                    <input class="dyn-input" type="text" id="name[1]" name="name[1]" value="x" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input" type="text" id="name[1]" name="name[1]" value="y" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input" type="text" id="name[1]" name="name[1]" value="z" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input" type="text" id="name[1]" name="name[1]" value="!" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="button tiny secondary add-row" data-table="pda-transition">Nova Transição</button>
+    <br><br>
+
+    <h4>Arcos</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Origem</th>
+                <th>Destino</th>
+            </tr>
+        </thead>
+        <tbody class="dynamic" id="pda-arc">
+            <tr>
+                <td>
+                    <input class="dyn-input" type="text" id="source[1]" name="source[1]" value="0" />
+                </td>
+                <td>
+                    <input class="dyn-input" type="text" id="target[1]" name="target[1]" value="9" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input" type="text" id="source[1]" name="source[1]" value="9" />
+                </td>
+                <td>
+                    <input class="dyn-input" type="text" id="target[1]" name="target[1]" value="1" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input" type="text" id="source[1]" name="source[1]" value="1" />
+                </td>
+                <td>
+                    <input class="dyn-input" type="text" id="target[1]" name="target[1]" value="6" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input" type="text" id="source[1]" name="source[1]" value="6" />
+                </td>
+                <td>
+                    <input class="dyn-input" type="text" id="target[1]" name="target[1]" value="2" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input" type="text" id="source[1]" name="source[1]" value="6" />
+                </td>
+                <td>
+                    <input class="dyn-input" type="text" id="target[1]" name="target[1]" value="3" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input" type="text" id="source[1]" name="source[1]" value="2" />
+                </td>
+                <td>
+                    <input class="dyn-input" type="text" id="target[1]" name="target[1]" value="8" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input" type="text" id="source[1]" name="source[1]" value="3" />
+                </td>
+                <td>
+                    <input class="dyn-input" type="text" id="target[1]" name="target[1]" value="7" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input" type="text" id="source[1]" name="source[1]" value="7" />
+                </td>
+                <td>
+                    <input class="dyn-input" type="text" id="target[1]" name="target[1]" value="4" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input" type="text" id="source[1]" name="source[1]" value="4" />
+                </td>
+                <td>
+                    <input class="dyn-input" type="text" id="target[1]" name="target[1]" value="8" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input class="dyn-input" type="text" id="source[1]" name="source[1]" value="8" />
+                </td>
+                <td>
+                    <input class="dyn-input" type="text" id="target[1]" name="target[1]" value="5" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="button tiny secondary add-row" data-table="pda-arc" id="add-arc">Nova Transição</button>
+    <br><br>
+
+    <br><br>
+    <button class="button tiny secondary" data-table="pda-details" id="build">Construir</button>
+  </div>
+</div>
+        <svg id="rhs"></svg>
+    </body>
+    <script src="./petri.js"></script>
+    <script src="./table.js"></script>
+</html>
