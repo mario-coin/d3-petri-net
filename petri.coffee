@@ -1,116 +1,134 @@
+# -----------------------------------
 # dados iniciais
-json =
-  nodes: [
+# -----------------------------------
+petri1 =
+  places: [
     # lugares
-    { id:0, name: ">", group: 0, count: 4 }
-    { id:1, name: "b", group: 0, count: 0 }
-    { id:2, name: "c", group: 0, count: 0 }
-    { id:3, name: "i", group: 0, count: 0 }
-    { id:4, name: "j", group: 0, count: 0 }
-    { id:5, name: "^", group: 0, count: 0 }
-
+    { name: ">", count: 1 }
+    { name: "l2", count: 2 }
+    { name: "l3", count: 0 }
+    { name: "l4", count: 1 }
+    { name: "^", count: 0 }
+  ]
+  transitions: [
     # transições
-    { id:6, name: "x", group: 1 }
-    { id:7, name: "y", group: 1 }
-    { id:8, name: "z", group: 1 }
-    { id:9, name: "!", group: 1 }
+    { name: "t2" }
+    { name: "!" }
   ]
   # arcos
   edges: [
-    { source: 0, target: 9 }
-    { source: 9, target: 1 }
-    { source: 1, target: 6 }
-    { source: 6, target: 2 }
-    { source: 6, target: 3 }
-    { source: 2, target: 8 }
-    { source: 3, target: 7 }
-    { source: 7, target: 4 }
-    { source: 4, target: 8 }
-    { source: 8, target: 5 }
+    { source: ">", target: "!" }
+    { source: "!", target: "l3" }
+    { source: "!", target: "l2" }
+    { source: "l2", target: "!" }
+    { source: "l3", target: "t2" }
+    { source: "l4", target: "t2" }
+    { source: "t2", target: "^" }
   ];
-  
-json =
-  nodes: [
+petri2 =
+  places: [
     # lugares
-    { id:0, name: ">", group: 0, count: 4 }
-    { id:1, name: "b", group: 0, count: 0 }
-    { id:2, name: "c", group: 0, count: 0 }
-    { id:3, name: "d", group: 0, count: 0 }
-    { id:4, name: "e", group: 0, count: 0 }
-    { id:5, name: "^", group: 0, count: 0 }
-
+    { name: ">", count: 2 }
+    { name: "l2", count: 0 }
+    { name: "l3", count: 2 }
+    { name: "l4", count: 0 }
+    { name: "l5", count: 5 }
+    { name: "l6", count: 0 }
+    { name: "l7", count: 0 }
+    { name: "^", count: 0 }
+  ]
+  transitions: [
     # transições
-    { id:6, name: "x", group: 1 }
-    { id:7, name: "y", group: 1 }
-    { id:8, name: "z", group: 1 }
-    { id:9, name: "!", group: 1 }
+    { name: "t2" }
+    { name: "t3" }
+    { name: "t4" }
+    { name: "!" }
   ]
   # arcos
   edges: [
-    { source: 0, target: 9 }
-    { source: 9, target: 1 }
-    { source: 1, target: 6 }
-    { source: 6, target: 2 }
-    { source: 6, target: 3 }
-    { source: 2, target: 7 }
-    { source: 3, target: 7 }
-    { source: 7, target: 4 }
-    { source: 4, target: 8 }
-    { source: 8, target: 5 }
+    { source: ">", target: "!" }
+    { source: "!", target: "l2" }
+    { source: "l2", target: "t2" }
+    { source: "t2", target: "l4" }
+    { source: "l4", target: "t3" }
+    { source: "t3", target: "l3" }
+    { source: "l3", target: "t2" }
+    { source: "t3", target: "l7" }
+    { source: "t3", target: "l6" }
+    { source: "l7", target: "t4" }
+    { source: "l6", target: "t4" }
+    { source: "t4", target: "l5" }
+    { source: "l5", target: "t2" }
+    { source: "t4", target: "^" }
   ];
 
+# -----------------------------------
 # gerar dados na tabela
+# -----------------------------------
 $tbody_places = $('#pda-places')
 $tbody_transition = $('#pda-transition')
 $tbody_arc = $('#pda-arc')
 
-# escrever na tabela lugares e transições
-json.nodes.map (j, i) ->
-  # console.log(i, j)
-  if j.group == 0
+$('#read-ex1').on 'click', (e) ->
+  e.preventDefault()
+  read_1()
+
+$('#read-ex2').on 'click', (e) ->
+  e.preventDefault()
+  read_2()
+
+read_1 = () ->
+  read(petri1)
+
+read_2 = () ->
+  read(petri2)
+
+read = (petri) ->
+  # escrever na tabela lugares
+  petri.places.map (j, i) ->
     $tbody_places.append(['<tr>
-                  <td>
-                      <input class="dyn-input" type="text" id="id" name="id" value="' + j.id + '" />
-                  </td>
-                  <td>
-                      <input class="dyn-input" type="text" id="name" name="name" value="' + j.name + '" />
-                  </td>
-                  <td>
-                      <input class="dyn-input" type="text" id="count" name="count" value="' + j.count + '" />
-                  </td>
-                  <td>
-                      <button class="button tiny secondary delete-row">x</button>
-                  </td>
-              </tr>'])
-  else if j.group == 1
+                              <td>
+                                  <input class="dyn-input" type="text" id="name" name="name" value="' + j.name + '" />
+                              </td>
+                              <td>
+                                  <input class="dyn-input" type="text" id="count" name="count" value="' + j.count + '" />
+                              </td>
+                              <td>
+                                  <button class="button tiny secondary delete-row">x</button>
+                              </td>
+                          </tr>'])
+
+  # escrever na tabela transições
+  petri.transitions.map (j, i) ->
     $tbody_transition.append(['<tr>
-                  <td>
-                      <input class="dyn-input" type="text" id="id" name="id" value="' + j.id + '" />
-                  </td>
-                  <td>
-                      <input class="dyn-input" type="text" id="name" name="name" value="' + j.name + '" />
-                  </td>
-                  <td>
-                      <button class="button tiny secondary delete-row">x</button>
-                  </td>
-              </tr>'])
+                                  <td>
+                                      <input class="dyn-input" type="text" id="name" name="name" value="' + j.name + '" />
+                                  </td>
+                                  <td>
+                                      <button class="button tiny secondary delete-row">x</button>
+                                  </td>
+                              </tr>'])
 
-# escrever na tabela arcos
-json.edges.map (j, i) ->
-  # console.log(i, j)
-  $tbody_arc.append(['<tr>
-                <td>
-                    <input class="dyn-input" type="text" id="source" name="source" value="' + j.source + '" />
-                </td>
-                <td>
-                    <input class="dyn-input" type="text" id="target" name="target" value="' + j.target + '" />
-                </td>
-                <td>
-                    <button class="button tiny secondary delete-row">x</button>
-                </td>
-            </tr>'])
+  # escrever na tabela arcos
+  petri.edges.map (j, i) ->
+    # console.log(i, j)
+    $tbody_arc.append(['<tr>
+                            <td>
+                                <input class="dyn-input" type="text" id="source" name="source" value="' + j.source + '" />
+                            </td>
+                            <td>
+                                <input class="dyn-input" type="text" id="target" name="target" value="' + j.target + '" />
+                            </td>
+                            <td>
+                                <button class="button tiny secondary delete-row">x</button>
+                            </td>
+                        </tr>'])
 
+  build_delete_row()
+
+# -----------------------------------
 # build petri net
+# -----------------------------------
 $('#build').on 'click', (e) ->
   e.preventDefault()
   build()
@@ -134,13 +152,16 @@ build = () ->
 
   # mapear lugares
   $($tbody_places.children('tr')).map (j, i) ->
-    json.nodes.push { id: +$(i).find('#id').val(), name: $(i).find('#name').val(), group: 0, count: +$(i).find('#count').val() }
+    json.nodes.push { id: j, name: $(i).find('#name').val(), group: 0, count: +$(i).find('#count').val() }
+  length = json.nodes.length
   # mapear transições
   $($tbody_transition.children('tr')).map (j, i) ->
-    json.nodes.push { id: +$(i).find('#id').val(), name: $(i).find('#name').val(), group: 1 }
+    json.nodes.push { id: length + j, name: $(i).find('#name').val(), group: 1 }
   # mapear arcos
   $($tbody_arc.children('tr')).map (j, i) ->
-    json.edges.push { source: +$(i).find('#source').val(), target: +$(i).find('#target').val() }
+    s = (json.nodes.filter (x) -> $(i).find('#source').val() == x.name)[0].id
+    t = (json.nodes.filter (x) -> $(i).find('#target').val() == x.name)[0].id
+    json.edges.push { source: s, target: t }
 
   # rodar rede petri
   force
@@ -239,6 +260,9 @@ build = () ->
       .attr( "x", (d) -> d.x - radius )
       .attr( "y", (d) -> d.y - radius )
 
+# -----------------------------------
+# table events
+# -----------------------------------
 $('.add-row').on 'click', (e) ->
   e.preventDefault()
   table_body = $(e.target).data().table
@@ -285,5 +309,3 @@ build_delete_row = () ->
   $('.delete-row').on 'click', (e) ->
     e.preventDefault()
     $(e.target).closest('tr').remove()
-
-build_delete_row()
