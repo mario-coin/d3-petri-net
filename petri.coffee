@@ -61,6 +61,34 @@ petri2 =
     { source: "l5", target: "t2" }
     { source: "t4", target: "^" }
   ];
+petri3 =
+  places: [
+    # lugares
+    { name: ">", count: 1 }
+    { name: "l2", count: 0 }
+    { name: "l3", count: 0 }
+    { name: "l4", count: 0 }
+    { name: "^", count: 0 }
+  ]
+  transitions: [
+    # transições
+    { name: "t2" }
+    { name: "t3" }
+    { name: "!" }
+  ]
+  # arcos
+  edges: [
+    { source: ">", target: "!" }
+    { source: "!", target: "l2" }
+    { source: "l2", target: "t2" }
+    { source: "l2", target: "t3" }
+
+    { source: "t2", target: "l3" }
+    { source: "t3", target: "l4" }
+
+    { source: "l3", target: "^" }
+    { source: "l4", target: "^" }
+  ];
 
 # -----------------------------------
 # gerar dados na tabela
@@ -71,17 +99,15 @@ $tbody_arc = $('#pda-arc')
 
 $('#read-ex1').on 'click', (e) ->
   e.preventDefault()
-  read_1()
+  read(petri1)
 
 $('#read-ex2').on 'click', (e) ->
   e.preventDefault()
-  read_2()
-
-read_1 = () ->
-  read(petri1)
-
-read_2 = () ->
   read(petri2)
+
+$('#read-ex3').on 'click', (e) ->
+  e.preventDefault()
+  read(petri3)
 
 read = (petri) ->
   # escrever na tabela lugares
@@ -124,6 +150,10 @@ read = (petri) ->
                             </td>
                         </tr>'])
 
+  $('.add-row').attr('disabled', false);
+  $('.read-ex').attr('disabled', true);
+  $('#build').attr('disabled', false);
+
   build_delete_row()
 
 # -----------------------------------
@@ -136,6 +166,10 @@ $('#build').on 'click', (e) ->
 build = () ->
   $d3 = d3
   $jq = $ # jquery
+
+  $('.add-row').attr('disabled', true);
+  $('.read-ex').attr('disabled', true);
+  $('#build').attr('disabled', true);
 
   width = $jq("#rhs").width()
   height = $jq("#rhs").height()
@@ -189,7 +223,6 @@ build = () ->
       .style( "stroke", "#000" )
       .style( "stroke-width", 2 );
 
-
   circs = svg.selectAll("circle.node")
       .data( holds )
       .enter().append( "circle" )
@@ -242,7 +275,6 @@ build = () ->
   node = svg.selectAll(".node")
   node.append( "title" )
     .text( (d) -> d.name )
-
 
   force.on "tick", ->
     texts

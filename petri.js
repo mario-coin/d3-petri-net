@@ -3,7 +3,7 @@
   // -----------------------------------
   // dados iniciais
   // -----------------------------------
-  var $tbody_arc, $tbody_places, $tbody_transition, add_row, build, build_delete_row, petri1, petri2, read, read_1, read_2;
+  var $tbody_arc, $tbody_places, $tbody_transition, add_row, build, build_delete_row, petri1, petri2, petri3, read;
 
   petri1 = {
     places: [
@@ -183,6 +183,79 @@
     ]
   };
 
+  petri3 = {
+    places: [
+      {
+        // lugares
+        name: ">",
+        count: 1
+      },
+      {
+        name: "l2",
+        count: 0
+      },
+      {
+        name: "l3",
+        count: 0
+      },
+      {
+        name: "l4",
+        count: 0
+      },
+      {
+        name: "^",
+        count: 0
+      }
+    ],
+    transitions: [
+      {
+        // transições
+        name: "t2"
+      },
+      {
+        name: "t3"
+      },
+      {
+        name: "!"
+      }
+    ],
+    // arcos
+    edges: [
+      {
+        source: ">",
+        target: "!"
+      },
+      {
+        source: "!",
+        target: "l2"
+      },
+      {
+        source: "l2",
+        target: "t2"
+      },
+      {
+        source: "l2",
+        target: "t3"
+      },
+      {
+        source: "t2",
+        target: "l3"
+      },
+      {
+        source: "t3",
+        target: "l4"
+      },
+      {
+        source: "l3",
+        target: "^"
+      },
+      {
+        source: "l4",
+        target: "^"
+      }
+    ]
+  };
+
   // -----------------------------------
   // gerar dados na tabela
   // -----------------------------------
@@ -194,21 +267,18 @@
 
   $('#read-ex1').on('click', function(e) {
     e.preventDefault();
-    return read_1();
+    return read(petri1);
   });
 
   $('#read-ex2').on('click', function(e) {
     e.preventDefault();
-    return read_2();
+    return read(petri2);
   });
 
-  read_1 = function() {
-    return read(petri1);
-  };
-
-  read_2 = function() {
-    return read(petri2);
-  };
+  $('#read-ex3').on('click', function(e) {
+    e.preventDefault();
+    return read(petri3);
+  });
 
   read = function(petri) {
     // escrever na tabela lugares
@@ -224,6 +294,9 @@
       // console.log(i, j)
       return $tbody_arc.append(['<tr> <td> <input class="dyn-input" type="text" id="source" name="source" value="' + j.source + '" /> </td> <td> <input class="dyn-input" type="text" id="target" name="target" value="' + j.target + '" /> </td> <td> <button class="button tiny secondary delete-row">x</button> </td> </tr>']);
     });
+    $('.add-row').attr('disabled', false);
+    $('.read-ex').attr('disabled', true);
+    $('#build').attr('disabled', false);
     return build_delete_row();
   };
 
@@ -239,6 +312,9 @@
     var $d3, $jq, AND, active, all, box_color, circs, click_color, color, dead_color, force, height, holds, incoming, json, length, links, live_color, node, outgoing, radius, rects, svg, tasks, texts, width;
     $d3 = d3;
     $jq = $; // jquery
+    $('.add-row').attr('disabled', true);
+    $('.read-ex').attr('disabled', true);
+    $('#build').attr('disabled', true);
     width = $jq("#rhs").width();
     height = $jq("#rhs").height();
     color = d3.scale.category20();
